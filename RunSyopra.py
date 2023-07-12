@@ -58,7 +58,7 @@ def editar(id):
     cursorID.execute('SELECT * FROM materiales WHERE id = %s', (id,))
     consultaID = cursorID.fetchone()
 
-    return render_template('editarRegistro.html', materiales=consultaID)
+    return render_template('Actualizarmaterial.html', materiales=consultaID)
 
 @app.route('/actualizar/<int:id>', methods=['POST'])
 def actualizar(id):
@@ -84,46 +84,54 @@ entrega
 ////////
 
 @app.route('/')
-def Empleados():
+def proveedor():
     CC= mysql.connection.cursor()
-    CC.execute('SELECT * FROM Empleados WHERE id_empleado = %s', (id_empleado,))
-    conempleado = CC.fetchall() 
-    print (conempleado)
-    return render_template('index.html', Listaempleado=conempleado)
+    CC.execute('SELECT * FROM proveedor')
+    conproveedor = CC.fetchall() 
+    print (conproveedor)
+    return render_template('index.html', Listaproveedor=conproveedor)
 
-@app.route('/Guardar Empleado', methods=['POST'])
-def guardarEmpleado():
+@app.route('/guardarProveedor', methods=['POST'])
+def guardarProveedor():
     if request.method == 'POST':
         nombre = request.form['nombre']
-        ap = request.form['ap']
-        am = request.form['am']
-        print(nombre,ap,am)
+        print(nombre)
 
         # Conectar a la base de datos
         CS = mysql.connection.cursor()
-        CS.execute('INSERT INTO Empleados (id_) VALUES (%s, %s)', (nombre,ap,am))
+        CS.execute('INSERT INTO proveedor (id_proveedor) VALUES (%s)', (nombre))
         mysql.connection.commit()
 
-    flash('la solicitud fue agregado correctamente')
+    flash('el proveedor fue agregado correctamente')
     return redirect(url_for('index'))
 
-@app.route('/eliminar/<int:id_compra>')
-def eliminarSolicitud(id_compra):
+@app.route('/eliminarProveedor/<int:id_proveedor>')
+def eliminarProveedor(id_proveedor):
     cursorId = mysql.connection.cursor()
-    cursorId.execute('DELETE FROM compra_de_Materiales WHERE id_compra = %s', (id_compra,))
+    cursorId.execute('DELETE FROM proveedor WHERE id_proveedor = %s', (id_proveedor,))
     mysql.connection.commit()
-    flash('la solicitud fue agregado correctamente')
+    flash('el proveedor fue agregado correctamente')
     return redirect(url_for('index'))
 
-@app.route('/editar/<string:id_Compra>')
-def editarSolicitud(id_Compra):
+@app.route('/editarProveedor/<string:id_proveedor>')
+def editarProveedor(id_proveedor):
     cursorID = mysql.connection.cursor()
-    cursorID.execute('SELECT * FROM Compra_de_Materiales WHERE id_Solicitud = %s', (id_Compra,))
+    cursorID.execute('SELECT * FROM proveedor WHERE id_proveedor = %s', (id_proveedor,))
     consultaID = cursorID.fetchone()
 
-    return render_template('ActualizarCompra.html', solicitud_de_materiales=consultaID)
+    return render_template('ActualizarProveedor.html', proveedor=consultaID)
 
+@app.route('/actualizarProveedor/<int:id_proveedor>', methods=['POST'])
+def actualizarProveedor(id_proveedor):
+    if request.method == 'POST':
+        proveedor = request.form['nombre']
+        
+        cursorAct = mysql.connection.cursor()
+        cursorAct.execute('UPDATE nombre = %s  WHERE id_proveedor = %s', (proveedor, id_proveedor))
+        mysql.connection.commit()
 
+    flash('Se actualizó el registro ' + proveedor)
+    return redirect(url_for('index'))
 #ejecucion
 if __name__ == '__main__':
     app.run(port= 5000)
