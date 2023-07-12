@@ -1,0 +1,32 @@
+head {
+    
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center ;
+  }
+
+body {
+    
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center ;
+  }
+  
+  .Actualizar_material{
+    
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+   
+    text-align: center;
+  }
+  
+  #note {
+    text-align: center ;
+    
+  }
