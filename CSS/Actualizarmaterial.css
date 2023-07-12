@@ -1,4 +1,5 @@
 head {
+
     
     justify-content: center;
     align-items: center;
@@ -25,8 +26,8 @@ body {
    
     text-align: center;
   }
-  
-  #note {
-    text-align: center ;
-    
+
+  .center-title {
+    text-justify: auto;
   }
+  
