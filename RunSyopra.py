@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']='12345'
-app.config['MYSQL_DB']='SyopraBD'
+app.config['MYSQL_DB']='syopraBD'
 app.secret_key = 'mysecretkey'
 mysql = MySQL(app)
 
@@ -75,9 +75,7 @@ def actualizar(id):
 
         flash('Se actualizó el registro ' + varNombre)
     return redirect(url_for('index'))
-//////////////////////////
 
-///////////////////
 
 @app.route('/')
 def logicap():
@@ -122,7 +120,7 @@ def editarSolicitud(id_compra):
 
     return render_template('ActualizarCompra.html', compra_de_materiales=consultaID)
 
-//////
+
 @app.route('/')
 def logicap():
     CC= mysql.connection.cursor()
@@ -144,7 +142,7 @@ def guardarEntrega():
 
         # Conectar a la base de datos
         CS = mysql.connection.cursor()
-        CS.execute('INSERT INTO Entrega_materiales (id_solicitud, id_material, cantidad, recibido_por, fecha_entrega) VALUES (%s, %s, %s, %s, %s)', (idsolicitud, idmaterial, cantidad, recibidopor, fechaentrega))
+        CS.execute('INSERT INTO entrega_materiales (id_solicitud, id_material, cantidad, recibido_por, fecha_entrega) VALUES (%s, %s, %s, %s, %s)', (idsolicitud, idmaterial, cantidad, recibidopor, fechaentrega))
         mysql.connection.commit()
 
     flash('la solicitud fue agregado correctamente')
@@ -153,7 +151,7 @@ def guardarEntrega():
 @app.route('/eliminar/<int:id_entrega>')
 def eliminarEntrega(id_entrega):
     cursorId = mysql.connection.cursor()
-    cursorId.execute('DELETE FROM Entrega_de_materiales WHERE id_entrega = %s', (id_entrega,))
+    cursorId.execute('DELETE FROM entrega_de_materiales WHERE id_entrega = %s', (id_entrega,))
     mysql.connection.commit()
     flash('la solicitud fue eliminada correctamente')
     return redirect(url_for('index'))
@@ -166,7 +164,7 @@ def editarEntrega(id_entrega):
 
     return render_template('ActualizarEntrega.html', entrega_de_materiales=consultaID)
 
-////////
+
 
 @app.route('/')
 def logicap():
@@ -189,7 +187,7 @@ def guardarCompra():
 
         # Conectar a la base de datos
         CS = mysql.connection.cursor()
-        CS.execute('INSERT INTO Compra_de_Materiales (estadocompra,materialId,cantidad,precio,proveedorId,fecha) VALUES (%s, %s, %s, %s, %s)', (estadocompra,materialId,cantidad,precio,proveedorId,fecha))
+        CS.execute('INSERT INTO compra_de_Materiales (estadocompra,materialId,cantidad,precio,proveedorId,fecha) VALUES (%s, %s, %s, %s, %s)', (estadocompra,materialId,cantidad,precio,proveedorId,fecha))
         mysql.connection.commit()
 
     flash('la solicitud fue agregado correctamente')
@@ -206,7 +204,7 @@ def eliminarSolicitud(id_compra):
 @app.route('/editar/<string:id_Compra>')
 def editarSolicitud(id_Compra):
     cursorID = mysql.connection.cursor()
-    cursorID.execute('SELECT * FROM Compra_de_Materiales WHERE id_Solicitud = %s', (id_Compra,))
+    cursorID.execute('SELECT * FROM compra_de_Materiales WHERE id_Solicitud = %s', (id_Compra,))
     consultaID = cursorID.fetchone()
 
     return render_template('ActualizarCompra.html', solicitud_de_materiales=consultaID)
